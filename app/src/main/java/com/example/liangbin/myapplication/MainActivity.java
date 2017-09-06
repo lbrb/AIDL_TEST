@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.Timer;
+
 public class MainActivity extends Activity {
     private final String TAG = "TEST";
     private ITest mRemoteService = null;
