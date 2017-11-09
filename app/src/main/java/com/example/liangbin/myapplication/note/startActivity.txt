@@ -1,0 +1,16 @@
+Activity#startActivity
+Activity#startActivityForResult
+Instrumentation#execStartActivity
+ActivityManagerProxy#startActivity
+ActivityManagerNative#startActivity
+ActivityManagerService#startActivity
+ActivityManagerService#startActivityAsUser
+ActivityStackSupervisor#startActivityMayWait
+	ActivityInfo?
+	ActivityStackSupervisor#resolveActivity
+	AppGlobals.getPackageManager()
+	ActivityThread#getPackageManager
+	PackageManagerService#resolveIntent
+	PackageManagerService#queryIntentActivities
+	PackageManagerService#chooseBestActivity
+ActivityStackSupervisor#startActivityLocked
