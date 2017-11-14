@@ -1430,7 +1430,7 @@ public final class ActivityThread {
                     break;
                 case CREATE_SERVICE:
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "serviceCreate");
-                    handleCreateService((CreateServiceData)msg.obj);
+                    ((CreateServiceData)msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
                     break;
                 case BIND_SERVICE:
@@ -2854,7 +2854,7 @@ public final class ActivityThread {
 
     private void handleCreateService(CreateServiceData data) {
         // If we are getting ready to gc after going to the background, well
-        // we are back active so skip it.
+        // we are back active so handleCreateServiceskip it.
         unscheduleGcIdler();
 
         LoadedApk packageInfo = getPackageInfoNoCheck(
