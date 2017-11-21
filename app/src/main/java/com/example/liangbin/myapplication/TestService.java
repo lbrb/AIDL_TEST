@@ -18,7 +18,6 @@ public class TestService extends Service {
     private final IBinder mBinder = new ITest.Stub() {
         @Override
         public int getPid() throws RemoteException {
-            BatteryManager
             return android.os.Process.myPid();
         }
     };
