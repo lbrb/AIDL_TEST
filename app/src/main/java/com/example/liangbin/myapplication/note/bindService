@@ -1,0 +1,39 @@
+ContextImpl#bindService
+ContextImpl#bindServiceCommon
+    //将本地connect对象转化为可进行进程间通信的binder对象
+    LoadedApk#getServiceDispatcher
+ActivityManagerService#bindService
+ActiveServices#bindServiceLocked
+
+//启动服务,Service#onCreate
+ActiveServices#bringUpServiceLocked
+    ActivityManagerService#startProcessLocked(mPendingServices.add(r);)
+    Process#start
+    ActivityThread#main
+    ActivityThread#attach
+    ActivityManagerService#attachApplication
+    ActivityManagerService#attachApplicationLocked
+    ActiveServices#attachApplicationLocked
+    ActiveServices#realStartServiceLocked
+    ActivityThread#scheduleCreateService
+    ActivityThread#handleCreateService
+    Service#onCreate
+
+
+//回调onBind
+ActiveServices#requestServiceBindingLocked
+ActivityThread#scheduleBindService
+ActivityThread#handleBindService
+Service#onBind
+ActivityManagerService#publishService
+ActiveServices#publishServiceLocked
+
+
+//回调onServiceConnected
+ConnectionRecord#conn
+InnerConnection#connected
+LoadedApk.ServiceDispatcher#connected
+LoadedApk.ServiceDispatcher#doConnected
+ServiceConnection#onServiceConnected
+
+

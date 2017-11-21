@@ -14,3 +14,63 @@ ActivityStackSupervisor#startActivityMayWait
 	PackageManagerService#queryIntentActivities
 	PackageManagerService#chooseBestActivity
 ActivityStackSupervisor#startActivityLocked
+ActivityStackSupervisor#startActivityUncheckedLocked
+ActivityStack#startActivityLocked
+ActivityStackSupervisor#resumeTopActivitiesLocked
+ActivityStack#resumeTopActivityLocked
+ActivityStack#resumeTopActivityInnerLocked
+//先暂停当前的activity
+ActivityStack#startPausingLocked
+    ActivityThread#schedulePauseActivity
+    ActivityThread#handlePauseActivity
+        ActivityThread#performPauseActivity
+        Instrumentation#callActivityOnPause
+        Activity#performPause
+        Activity#onPause
+    ActivityManagerService#activityPaused
+    ActivityStack#activityPausedLocked
+    ActivityStack#completePauseLocked
+    //开始启动activity
+    ActivityStackSupervisor#resumeTopActivitiesLocked
+    ActivityStack#resumeTopActivityLocked
+    ActivityStack#resumeTopActivityInnerLocked
+    ActivityStackSupervisor#resumeTopActivitiesLocked
+    ActivityStack#resumeTopActivityLocked
+    ActivityStack#resumeTopActivityInnerLocked
+    //启动进程
+    ActivityStackSupervisor#startSpecificActivityLocked
+    ActivityManagerService#startProcessLocked
+    Process#start
+    ActivityThread#main
+    ActivityThread#attach
+    ActivityManagerService#attachApplication
+    ActivityManagerService#attachApplicationLocked
+        //调用application的oncreate
+        ActivityThread#bindApplication
+        ActivityThread#handleBindApplication
+        Instrumentation#callApplicationOnCreate
+        Application#oncreate
+        //启动activity
+        ActivityStackSupervisor#attachApplicationLocked
+        ActivityStackSupervisor#realStartActivityLocked
+        ActivityStackSupervisor#scheduleLaunchActivity
+        ActivityThread#scheduleLaunchActivity
+        ActivityThread#handleLaunchActivity
+            //onCreate
+            ActivityThread#performLaunchActivity
+            Instrumentation#callActivityOnCreate
+            Activity#performCreate
+            Activity#onCreate
+
+            //onRestart,onStart,onResume
+            ActivityThread#handleResumeActivity
+            ActivityThread#performResumeActivity
+            Activity#performResume
+                Activity#performRestart();
+                    Instrumentation#callActivityOnRestart
+                        Activity#onRestart
+                    Activity#performStart
+                        Instrumentation#callActivityOnStart
+                        Activity#onStart
+                Instrumentation#callActivityOnResume
+                    Activity#onResume
