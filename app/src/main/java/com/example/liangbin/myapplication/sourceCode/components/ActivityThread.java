@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-package com.example.liangbin.myapplication.framework;
+package android.app;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityOptions;
-import android.app.Application;
-import android.app.Instrumentation;
-import android.app.Service;
 import android.app.assist.AssistContent;
 import android.app.assist.AssistStructure;
 import android.app.backup.BackupAgent;
@@ -156,7 +150,7 @@ final class RemoteServiceException extends AndroidRuntimeException {
 public final class ActivityThread {
     /** @hide */
     public static final String TAG = "ActivityThread";
-    private static final Bitmap.Config THUMBNAIL_FORMAT = Bitmap.Config.RGB_565;
+    private static final android.graphics.Bitmap.Config THUMBNAIL_FORMAT = Bitmap.Config.RGB_565;
     static final boolean localLOGV = false;
     static final boolean DEBUG_MESSAGES = false;
     /** @hide */
@@ -803,7 +797,7 @@ public final class ActivityThread {
              * name inside the runtime.
              */
             IPackageManager pm = getPackageManager();
-            PackageInfo pi = null;
+            android.content.pm.PackageInfo pi = null;
             try {
                 pi = pm.getPackageInfo(appInfo.packageName, 0, UserHandle.myUserId());
             } catch (RemoteException e) {
@@ -1430,7 +1424,7 @@ public final class ActivityThread {
                     break;
                 case CREATE_SERVICE:
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "serviceCreate");
-                    ((CreateServiceData)msg.obj);
+                    handleCreateService((CreateServiceData)msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
                     break;
                 case BIND_SERVICE:
@@ -1572,7 +1566,7 @@ public final class ActivityThread {
                 // convert the *private* ActivityThread.PackageInfo to *public* known
                 // android.content.pm.PackageInfo
                 String packageName = mBoundApplication.info.mPackageName;
-                PackageInfo packageInfo = null;
+                android.content.pm.PackageInfo packageInfo = null;
                 try {
                     Context context = getSystemContext();
                     if(context == null) {
@@ -2319,7 +2313,7 @@ public final class ActivityThread {
 
         Activity activity = null;
         try {
-            ClassLoader cl = r.packageInfo.getClassLoader();
+            java.lang.ClassLoader cl = r.packageInfo.getClassLoader();
             activity = mInstrumentation.newActivity(
                     cl, component.getClassName(), r.intent);
             StrictMode.incrementExpectedActivityCount(activity.getClass());
@@ -2700,7 +2694,7 @@ public final class ActivityThread {
 
         BroadcastReceiver receiver;
         try {
-            ClassLoader cl = packageInfo.getClassLoader();
+            java.lang.ClassLoader cl = packageInfo.getClassLoader();
             data.intent.setExtrasClassLoader(cl);
             data.intent.prepareToEnterProcess();
             data.setExtrasClassLoader(cl);
@@ -2797,7 +2791,7 @@ public final class ActivityThread {
                 try {
                     if (DEBUG_BACKUP) Slog.v(TAG, "Initializing agent class " + classname);
 
-                    ClassLoader cl = packageInfo.getClassLoader();
+                    java.lang.ClassLoader cl = packageInfo.getClassLoader();
                     agent = (BackupAgent) cl.loadClass(classname).newInstance();
 
                     // set up the agent's context
@@ -2854,14 +2848,14 @@ public final class ActivityThread {
 
     private void handleCreateService(CreateServiceData data) {
         // If we are getting ready to gc after going to the background, well
-        // we are back active so handleCreateServiceskip it.
+        // we are back active so skip it.
         unscheduleGcIdler();
 
         LoadedApk packageInfo = getPackageInfoNoCheck(
                 data.info.applicationInfo, data.compatInfo);
         Service service = null;
         try {
-            ClassLoader cl = packageInfo.getClassLoader();
+            java.lang.ClassLoader cl = packageInfo.getClassLoader();
             service = (Service) cl.loadClass(data.info.name).newInstance();
         } catch (Exception e) {
             if (!mInstrumentation.onException(service, e)) {
@@ -4614,7 +4608,7 @@ public final class ActivityThread {
             try {
                 ii = appContext.getPackageManager().
                     getInstrumentationInfo(data.instrumentationName, 0);
-            } catch (NameNotFoundException e) {
+            } catch (PackageManager.NameNotFoundException e) {
             }
             if (ii == null) {
                 throw new RuntimeException(
@@ -4643,7 +4637,7 @@ public final class ActivityThread {
             ContextImpl instrContext = ContextImpl.createAppContext(this, pi);
 
             try {
-                ClassLoader cl = instrContext.getClassLoader();
+                java.lang.ClassLoader cl = instrContext.getClassLoader();
                 mInstrumentation = (Instrumentation)
                     cl.loadClass(data.instrumentationName.getClassName()).newInstance();
             } catch (Exception e) {
@@ -5131,7 +5125,7 @@ public final class ActivityThread {
                 try {
                     c = context.createPackageContext(ai.packageName,
                             Context.CONTEXT_INCLUDE_CODE);
-                } catch (NameNotFoundException e) {
+                } catch (PackageManager.NameNotFoundException e) {
                     // Ignore
                 }
             }
@@ -5143,7 +5137,7 @@ public final class ActivityThread {
                 return null;
             }
             try {
-                final ClassLoader cl = c.getClassLoader();
+                final java.lang.ClassLoader cl = c.getClassLoader();
                 localProvider = (ContentProvider)cl.
                     loadClass(info.name).newInstance();
                 provider = localProvider.getIContentProvider();
@@ -5157,7 +5151,7 @@ public final class ActivityThread {
                     TAG, "Instantiating local provider " + info.name);
                 // XXX Need to create the correct context for this provider.
                 localProvider.attachInfo(c, info);
-            } catch (Exception e) {
+            } catch (java.lang.Exception e) {
                 if (!mInstrumentation.onException(null, e)) {
                     throw new RuntimeException(
                             "Unable to get provider " + info.name
